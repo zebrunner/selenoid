@@ -61,14 +61,17 @@
     if [[ ! -f ${BASEDIR}/.disabled ]]; then
       docker-compose --env-file ${BASEDIR}/.env -f ${BASEDIR}/docker-compose.yml down -v
     fi
+
+    rm -rf ${BASEDIR}/video/*.mp4
+    rm ${BASEDIR}/browsers.json
   }
 
   backup() {
-    echo "no actions needed"
+    cp ${BASEDIR}/browsers.json ${BASEDIR}/browsers.json.bak
   }
 
   restore() {
-    echo "no actions needed"
+    mv ${BASEDIR}/browsers.json.bak ${BASEDIR}/browsers.json
   }
 
   echo_help() {
