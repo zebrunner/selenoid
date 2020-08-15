@@ -1,10 +1,7 @@
 #!/bin/bash
 
   setup() {
-    docker network inspect infra >/dev/null 2>&1 || docker network create infra
-
     echo downloading latest chrome/firefox/opera browser images
-
     set -e +o pipefail
 
     say() {
@@ -20,10 +17,10 @@
 
     LATEST_BINARY_URL=`curl -s https://api.github.com/repos/aerokube/cm/releases/latest | grep "browser_download_url" | grep ${OS_TYPE} | cut -d : -f 2,3 | tr -d \"`
 
-    curl -L -o ${BASEDIR}/bin/cm $LATEST_BINARY_URL
-    chmod +x ${BASEDIR}/bin/cm
+    curl -L -o bin/cm $LATEST_BINARY_URL
+    chmod +x bin/cm
 
-    VERSION=`${BASEDIR}/bin/cm version`
+    VERSION=`bin/cm version`
 
     say "
     SUCCESSFULLY DOWNLOADED!
@@ -31,47 +28,66 @@
     $VERSION
     "
 
-    ${BASEDIR}/bin/cm selenoid update --vnc --config-dir "${BASEDIR}" $*
+    bin/cm selenoid update --vnc --config-dir "${BASEDIR}" $*
 
     docker rm -f selenoid
+  }
+
+  shutdown() {
+    if [[ -f .disabled ]]; then
+      exit 0
+    fi
+
+    docker-compose --env-file .env -f docker-compose.yml down -v
+
+    rm -rf video/*.mp4
+    rm browsers.json
   }
 
   start() {
     # create infra network only if not exist
     docker network inspect infra >/dev/null 2>&1 || docker network create infra
 
-    if [[ ! -f ${BASEDIR}/.disabled ]]; then
-      docker-compose --env-file ${BASEDIR}/.env -f ${BASEDIR}/docker-compose.yml up -d
+    if [[ -f .disabled ]]; then
+      exit 0
     fi
+
+    docker-compose --env-file .env -f docker-compose.yml up -d
   }
 
   stop() {
-    if [[ ! -f ${BASEDIR}/.disabled ]]; then
-      docker-compose --env-file ${BASEDIR}/.env -f ${BASEDIR}/docker-compose.yml stop
+    if [[ -f .disabled ]]; then
+      exit 0
     fi
+
+    docker-compose --env-file .env -f docker-compose.yml stop
   }
 
   down() {
-    if [[ ! -f ${BASEDIR}/.disabled ]]; then
-      docker-compose --env-file ${BASEDIR}/.env -f ${BASEDIR}/docker-compose.yml down
-    fi
-  }
-
-  shutdown() {
-    if [[ ! -f ${BASEDIR}/.disabled ]]; then
-      docker-compose --env-file ${BASEDIR}/.env -f ${BASEDIR}/docker-compose.yml down -v
+    if [[ -f .disabled ]]; then
+      exit 0
     fi
 
-    rm -rf ${BASEDIR}/video/*.mp4
-    rm ${BASEDIR}/browsers.json
+    docker-compose --env-file .env -f docker-compose.yml down
   }
 
   backup() {
-    cp ${BASEDIR}/browsers.json ${BASEDIR}/browsers.json.bak
+    cp browsers.json browsers.json.bak
   }
 
   restore() {
-    mv ${BASEDIR}/browsers.json.bak ${BASEDIR}/browsers.json
+    mv browsers.json.bak browsers.json
+  }
+
+  echo_warning() {
+    echo "
+      WARNING! $1"
+  }
+
+  echo_telegram() {
+    echo "
+      For more help join telegram channel: https://t.me/zebrunner
+      "
   }
 
   echo_help() {
@@ -80,17 +96,17 @@
       Flags:
           --help | -h    Print help
       Arguments:
-          start          Start container
-          stop           Stop and keep container
-          restart        Restart container
-          down           Stop and remove container
-          shutdown       Stop and remove container, clear volumes
-          backup         Backup container
-          restore        Restore container
-      For more help join telegram channel https://t.me/qps_infra"
+          setup          Download two latest versions of chrome, firefox and opera browsers
+      	  start          Start container
+      	  stop           Stop and keep container
+      	  restart        Restart container
+      	  down           Stop and remove container
+      	  shutdown       Stop and remove container, clear volumes
+      	  backup         Backup container
+      	  restore        Restore container"
+      echo_telegram
       exit 0
   }
-
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd ${BASEDIR}
