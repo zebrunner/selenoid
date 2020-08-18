@@ -76,7 +76,9 @@
   }
 
   restore() {
+    stop
     mv browsers.json.bak browsers.json
+    down
   }
 
   echo_warning() {
