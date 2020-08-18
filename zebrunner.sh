@@ -79,7 +79,7 @@
   restore() {
     stop
     mv browsers.json.bak browsers.json
-    cd / && tar -xzvf ${BASEDIR}/backup/video.tar.gz
+    tar -xzvf ${BASEDIR}/backup/video.tar.gz
     cd ${BASEDIR}
     down
   }
