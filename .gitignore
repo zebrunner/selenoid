@@ -2,4 +2,5 @@
 bin/cm
 browsers.json
 *.bak
-
+*.tar.gz
+*.mp4
