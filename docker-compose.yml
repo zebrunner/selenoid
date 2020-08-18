@@ -14,7 +14,7 @@ services:
      - ./browsers.json:/etc/selenoid/browsers.json
      - ./video/:/opt/selenoid/video/
     environment:
-      - OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/selenoid/video/
+      - OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/video/
     command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-timeout", "3m0s", "-container-network", "infra"]
 #    ports:
 #     - "4444:4444"
