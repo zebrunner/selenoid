@@ -41,7 +41,7 @@
     docker-compose --env-file .env -f docker-compose.yml down -v
 
     rm -rf video/*.mp4
-    rm browsers.json
+    rm -f browsers.json
   }
 
   start() {
