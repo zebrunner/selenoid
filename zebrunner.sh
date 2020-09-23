@@ -85,8 +85,12 @@
   }
 
   version() {
-      source .env
-      echo "${TAG_SELENOID}"
+    if [[ -f .disabled ]]; then
+      exit 0
+    fi
+
+    source .env
+    echo "${TAG_SELENOID}"
   }
 
   echo_warning() {
