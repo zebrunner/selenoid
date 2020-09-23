@@ -90,7 +90,7 @@
     fi
 
     source .env
-    echo "${TAG_SELENOID}"
+    echo "Selenoid - ${TAG_SELENOID}"
   }
 
   echo_warning() {
