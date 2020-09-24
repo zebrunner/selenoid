@@ -118,7 +118,7 @@
       	  shutdown       Stop and remove container, clear volumes
       	  backup         Backup container
       	  restore        Restore container
-          version        Version of container"
+      	  version        Version of container"
       echo_telegram
       exit 0
   }
