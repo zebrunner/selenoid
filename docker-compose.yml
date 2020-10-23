@@ -7,7 +7,7 @@ services:
   selenoid:
     networks:
       default: null
-    image: aerokube/selenoid:${TAG_SELENOID}
+    image: zebrunner/selenoid:${TAG_SELENOID}
     container_name: selenoid
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
