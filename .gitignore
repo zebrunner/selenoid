@@ -1,4 +1,5 @@
 .disabled
+.env
 bin/cm
 browsers.json
 *.bak

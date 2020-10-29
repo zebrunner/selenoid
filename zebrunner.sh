@@ -1,6 +1,17 @@
 #!/bin/bash
 
   setup() {
+
+    cp .env.original .env
+    if [[ $ZBR_MINIO_ENABLED -eq 0 ]]; then
+      # use case with AWS S3
+      sed -i "s#S3_REGION=us-east-1#S3_REGION=${ZBR_STORAGE_REGION}#g" .env
+      sed -i "s#S3_ENDPOINT=http://minio:9000#S3_ENDPOINT=${ZBR_STORAGE_ENDPOINT_PROTOCOL}://${ZBR_STORAGE_ENDPOINT_HOST}#g" .env
+      sed -i "s#S3_BUCKET=zebrunner#S3_BUCKET=${ZBR_STORAGE_BUCKET}#g" .env
+      sed -i "s#S3_ACCESS_KEY_ID=zebrunner#S3_ACCESS_KEY_ID=${ZBR_STORAGE_ACCESS_KEY}#g" .env
+      sed -i "s#S3_SECRET=J33dNyeTDj#S3_SECRET=${ZBR_STORAGE_SECRET_KEY}#g" .env
+    fi
+
     echo downloading latest chrome/firefox/opera browser images
     set -e +o pipefail
 
@@ -40,16 +51,20 @@
 
     docker-compose --env-file .env -f docker-compose.yml down -v
 
-    rm -rf video/*.mp4
     rm -f browsers.json
+    rm -f .env
   }
 
   start() {
+    if [[ -f .disabled ]]; then
+      exit 0
+    fi
+
     # create infra network only if not exist
     docker network inspect infra >/dev/null 2>&1 || docker network create infra
 
-    if [[ -f .disabled ]]; then
-      exit 0
+    if [[ ! -f .env ]]; then
+      cp .env.original .env
     fi
 
     docker-compose --env-file .env -f docker-compose.yml up -d
@@ -72,14 +87,22 @@
   }
 
   backup() {
+    if [[ -f .disabled ]]; then
+      exit 0
+    fi
+
+    cp .env .env.bak
     cp browsers.json browsers.json.bak
-    tar -czvf backup/video.tar.gz video
   }
 
   restore() {
+    if [[ -f .disabled ]]; then
+      exit 0
+    fi
+
     stop
-    mv browsers.json.bak browsers.json
-    tar -xzvf ${BASEDIR}/backup/video.tar.gz
+    cp .env.bak .env
+    cp browsers.json.bak browsers.json
     cd ${BASEDIR}
     down
   }
