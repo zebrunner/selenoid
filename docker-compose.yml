@@ -15,7 +15,7 @@ services:
      - ./temp/:/opt/selenoid/temp/
     environment:
       - OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/temp/
-    command: ["-video-output-dir", "/opt/selenoid/temp", "-log-output-dir", "/opt/selenoid/temp", "-timeout", "3m0s", "-container-network", "infra", "-s3-endpoint", "$S3_ENDPOINT", "-s3-region", "$S3_REGION", "-s3-bucket-name", "$S3_BUCKET", "-s3-access-key", "$S3_ACCESS_KEY_ID", "-s3-secret-key", "$S3_SECRET", "-s3-key-pattern", "artifacts/driver-sessions/$$sessionId/$$fileName", "-s3-force-path-style", "true"]
+    command: ["-video-output-dir", "/opt/selenoid/temp", "-log-output-dir", "/opt/selenoid/temp", "-timeout", "3m0s", "-container-network", "infra", "-s3-endpoint", "$S3_ENDPOINT", "-s3-region", "$S3_REGION", "-s3-bucket-name", "$S3_BUCKET", "-s3-access-key", "$S3_ACCESS_KEY_ID", "-s3-secret-key", "$S3_SECRET", "-s3-key-pattern", "artifacts/test-sessions/$$sessionId/$$fileName", "-s3-force-path-style", "true"]
 #    ports:
 #     - "4444:4444"
     restart: always
