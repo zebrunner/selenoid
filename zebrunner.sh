@@ -10,6 +10,10 @@
       sed -i "s#S3_BUCKET=zebrunner#S3_BUCKET=${ZBR_STORAGE_BUCKET}#g" .env
       sed -i "s#S3_ACCESS_KEY_ID=zebrunner#S3_ACCESS_KEY_ID=${ZBR_STORAGE_ACCESS_KEY}#g" .env
       sed -i "s#S3_SECRET=J33dNyeTDj#S3_SECRET=${ZBR_STORAGE_SECRET_KEY}#g" .env
+
+      if [[ ! -z $ZBR_STORAGE_TENANT ]]; then
+        sed -i "s#/artifacts#${ZBR_STORAGE_TENANT}/artifacts#g" .env
+      fi
     fi
 
     echo downloading latest chrome/firefox/opera browser images
