@@ -5,3 +5,4 @@ browsers.json
 *.bak
 *.tar.gz
 *.mp4
+temp/
