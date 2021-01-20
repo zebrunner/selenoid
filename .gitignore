@@ -2,6 +2,8 @@
 .env
 bin/cm
 browsers.json
+backup
+!backup/settings.env.original
 *.bak
 *.tar.gz
 *.mp4

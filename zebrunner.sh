@@ -6,6 +6,11 @@
       # load default interactive installer settings
       source backup/settings.env.original
 
+      # load ./backup/settings.env if exist to declare ZBR* vars from previous run!
+      if [[ -f backup/settings.env ]]; then
+        source backup/settings.env
+      fi
+
       # setup executed outside of zebrunner community edition. need ask about S3 compatible storage credentials
       set_aws_storage_settings
     fi
@@ -23,6 +28,9 @@
         replace .env "/artifacts" "${ZBR_STORAGE_TENANT}/artifacts"
       fi
     fi
+
+    # export all ZBR* variables to save user input
+    export_settings
 
     echo downloading latest chrome/firefox/opera browser images
     set -e +o pipefail
@@ -51,9 +59,8 @@
     $VERSION
     "
 
-    bin/cm selenoid update --vnc --config-dir "${BASEDIR}" $*
-
-    docker rm -f selenoid
+    bin/cm selenoid configure --vnc --config-dir "${BASEDIR}" $*
+    # no need to remove selenoid container as we don't start and only configure prerequisites
   }
 
   shutdown() {
@@ -61,8 +68,15 @@
       exit 0
     fi
 
+    if [ ! -f backup/settings.env ]; then
+      echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
+      echo_telegram
+      exit -1
+    fi
+
     docker-compose --env-file .env -f docker-compose.yml down -v
 
+    rm -f backup/settings.env
     rm -f browsers.json
     rm -f .env
   }
@@ -70,6 +84,12 @@
   start() {
     if [[ -f .disabled ]]; then
       exit 0
+    fi
+
+    if [ ! -f backup/settings.env ]; then
+      echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
+      echo_telegram
+      exit -1
     fi
 
     # create infra network only if not exist
@@ -87,12 +107,24 @@
       exit 0
     fi
 
+    if [ ! -f backup/settings.env ]; then
+      echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
+      echo_telegram
+      exit -1
+    fi
+
     docker-compose --env-file .env -f docker-compose.yml stop
   }
 
   down() {
     if [[ -f .disabled ]]; then
       exit 0
+    fi
+
+    if [ ! -f backup/settings.env ]; then
+      echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
+      echo_telegram
+      exit -1
     fi
 
     docker-compose --env-file .env -f docker-compose.yml down
@@ -103,6 +135,13 @@
       exit 0
     fi
 
+    if [ ! -f backup/settings.env ]; then
+      echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
+      echo_telegram
+      exit -1
+    fi
+
+    cp backup/settings.env backup/settings.env.bak
     cp .env .env.bak
     cp browsers.json browsers.json.bak
   }
@@ -112,11 +151,58 @@
       exit 0
     fi
 
+    if [ ! -f backup/settings.env ]; then
+      echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
+      echo_telegram
+      exit -1
+    fi
+
     stop
+    cp backup/settings.env.bak backup/settings.env
     cp .env.bak .env
     cp browsers.json.bak browsers.json
     cd ${BASEDIR}
     down
+  }
+
+  confirm() {
+    local message=$1
+    local question=$2
+    local isEnabled=$3
+
+    if [[ "$isEnabled" == "1" ]]; then
+      isEnabled="y"
+    fi
+    if [[ "$isEnabled" == "0" ]]; then
+      isEnabled="n"
+    fi
+
+    while true; do
+      if [[ ! -z $message ]]; then
+        echo "$message"
+      fi
+
+      read -p "$question y/n [$isEnabled]:" response
+      if [[ -z $response ]]; then
+        if [[ "$isEnabled" == "y" ]]; then
+          return 1
+        fi
+        if [[ "$isEnabled" == "n" ]]; then
+          return 0
+        fi
+      fi
+
+      if [[ "$response" == "y" || "$response" == "Y" ]]; then
+        return 1
+      fi
+
+      if [[ "$response" == "n" ||  "$response" == "N" ]]; then
+        return 0
+      fi
+
+      echo "Please answer y (yes) or n (no)."
+      echo
+    done
   }
 
   version() {
@@ -126,6 +212,10 @@
 
     source .env
     echo "selenoid: ${TAG_SELENOID}"
+  }
+
+  export_settings() {
+    export -p | grep "ZBR" > backup/settings.env
   }
 
   # https://github.com/zebrunner/zebrunner/issues/384 investigate possibility to make sub-components configurable independently
