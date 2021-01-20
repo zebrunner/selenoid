@@ -75,6 +75,7 @@
     fi
 
     docker-compose --env-file .env -f docker-compose.yml down -v
+    bin/cm selenoid cleanup
 
     rm -f backup/settings.env
     rm -f browsers.json
