@@ -14,7 +14,7 @@ Is is fully integrated into the [Zebrunner (Community Edition)](https://zebrunne
    > Uncomment 4444 ports sharing if you wanna to use it as independent service
 3. Use `http://hostname:4444/wd/hub` url to start selenium tests for above browsers
 4. Run `./zebrunner.sh setup` anytime you wanna to pull latest browser version
-   > Each setup operation pull twi latest browsers versions for Chrome/Firefox and Opera browsers and update browsers.json for Selenoid service
+   > Each setup operation pull two latest browsers versions for Chrome/Firefox and Opera browsers and update browsers.json for Selenoid service
 
 ## Documentation and free support
 * [Zebrunner CE](https://zebrunner.github.io/zebrunner) 
