@@ -163,7 +163,7 @@
     cp backup/settings.env.bak backup/settings.env
     cp .env.bak .env
     cp browsers.json.bak browsers.json
-    cd ${BASEDIR}
+    cd "${BASEDIR}" || exit
     down
   }
 
