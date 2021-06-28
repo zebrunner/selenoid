@@ -163,7 +163,7 @@
     cp backup/settings.env.bak backup/settings.env
     cp .env.bak .env
     cp browsers.json.bak browsers.json
-    cd ${BASEDIR}
+    cd "${BASEDIR}" || exit
     down
   }
 
@@ -290,7 +290,7 @@
     #TODO: https://github.com/zebrunner/zebrunner/issues/328 organize debug logging for setup/replace
     file=$1
     #echo "file: $file"
-    content=$(<$file) # read the file's content into
+    content=$(<"$file") # read the file's content into
     #echo "content: $content"
 
     old=$2
@@ -301,8 +301,7 @@
     content=${content//"$old"/$new}
 
     #echo "content: $content"
-
-    printf '%s' "$content" >$file    # write new content to disk
+    printf '%s' "$content" >"$file"    # write new content to disk
   }
 
   echo_warning() {
@@ -336,7 +335,7 @@
   }
 
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd ${BASEDIR}
+cd "${BASEDIR}" || exit
 
 case "$1" in
     setup)
