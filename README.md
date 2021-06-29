@@ -24,7 +24,6 @@ Feel free to support the development with a [**donation**](https://www.paypal.co
 
 ## Documentation and free support
 * [Zebrunner CE](https://zebrunner.github.io/zebrunner) 
-* [Zebrunner Reporting](https://zebrunner.com/documentation) 
 * [Carina Guide](http://qaprosoft.github.io/carina) 
 * [Demo Project](https://github.com/qaprosoft/carina-demo) 
 * [Telegram Channel](https://t.me/zebrunner)
