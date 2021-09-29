@@ -16,6 +16,6 @@ services:
     environment:
       - OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/temp/
     command: ["-video-output-dir", "/opt/selenoid/temp", "-log-output-dir", "/opt/selenoid/temp", "-limit", "$LIMIT", "-cpu", "$CPU", "-mem", "$MEMORY", "-retry-count", "$RETRY_COUNT", "$SAVE_ALL_LOGS", "-service-startup-timeout", "$SERVICE_STARTUP_TIMEOUT", "-session-attempt-timeout", "$SESSION_ATTEMPT_TIMEOUT", "-session-delete-timeout", "$SESSION_DELETE_TIMEOUT", "-timeout", "$TIMEOUT", "-max-timeout", "$MAX_TIMEOUT", "-container-network", "$CONTAINER_NETWORK", "-s3-endpoint", "$S3_ENDPOINT", "-s3-region", "$S3_REGION", "-s3-bucket-name", "$S3_BUCKET", "-s3-access-key", "$S3_ACCESS_KEY_ID", "-s3-secret-key", "$S3_SECRET", "-s3-key-pattern", "$S3_KEY_PATTERN", "-s3-force-path-style", "true"]
-#    ports:
-#     - "4444:4444"
+    ports:
+     - "4444:4444"
     restart: always
