@@ -12,7 +12,7 @@ Feel free to support the development with a [**donation**](https://www.paypal.co
 </p>
 
 ## Usage
-1. Clone [selenoid](https://github.com/zebrunner/selenoid) and configure:
+1. Clone and configure:
    ```
    git clone https://github.com/zebrunner/selenoid.git && cd selenoid && ./zebrunner.sh setup
    ```
