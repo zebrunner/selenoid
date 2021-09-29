@@ -17,8 +17,7 @@ Feel free to support the development with a [**donation**](https://www.paypal.co
    git clone https://github.com/zebrunner/selenoid.git && cd selenoid && ./zebrunner.sh setup
    ```
 2. Provide the required details and start services.
-   > Uncomment 4444 ports sharing if you want to use it as independent service
-3. Use `http://hostname:4444/wd/hub` URL to start selenium tests for the above browsers
+3. Use `http://hostname:4444/wd/hub` as Selenium Hub Url foryour tests replacing hostname by actual value or ip address
 4. Run `./zebrunner.sh setup` anytime you want to pull the latest browser versions
    > Each setup operation pulls the two latest browsers versions for Chrome/Firefox and Opera browsers
 
