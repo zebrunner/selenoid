@@ -17,7 +17,7 @@ Feel free to support the development with a [**donation**](https://www.paypal.co
    git clone https://github.com/zebrunner/selenoid.git && cd selenoid && ./zebrunner.sh setup
    ```
 2. Provide the required details and start services
-   > S3 compatible storage is required.
+   > S3 compatible storage is needed.
 4. Use `http://hostname:4444/wd/hub` as Selenium Hub Url for your tests replacing hostname by actual value or ip address
 5. Execute `./zebrunner.sh setup` anytime you want to pull the latest browser versions
    > Each setup pulls the two latest browsers versions for Chrome/Firefox and Opera
