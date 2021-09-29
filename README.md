@@ -18,8 +18,8 @@ Feel free to support the development with a [**donation**](https://www.paypal.co
    ```
 2. Provide the required details and start services.
 3. Use `http://hostname:4444/wd/hub` as Selenium Hub Url for your tests replacing hostname by actual value or ip address
-4. Run `./zebrunner.sh setup` anytime you want to pull the latest browser versions
-   > Each setup operation pulls the two latest browsers versions for Chrome/Firefox and Opera browsers
+4. Execute `./zebrunner.sh setup` anytime you want to pull the latest browser versions
+   > Each setup pulls the two latest browsers versions for Chrome/Firefox and Opera
 
 ## Documentation and free support
 * [Zebrunner CE](https://zebrunner.github.io/zebrunner) 
