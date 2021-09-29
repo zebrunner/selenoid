@@ -1,7 +1,7 @@
 Zebrunner Selenoid Engine
 ==================
 
-Zebrunner Selenoid Engine is a dockerized infrastructure for executing web tests on Chrome, Firefox, Opera and Microsoft Edge browsers with rich artifacts generation (logs, video recordings etc).
+Dockerized selenium hub for executing web tests on Chrome, Firefox, Opera and Microsoft Edge browsers saving driver logs and video recordings onto the S3 compatible storage.
 
 It is fully integrated into the [Zebrunner (Community Edition)](https://zebrunner.github.io/zebrunner) ecosystem as an embedded Selenium Hub.
 
@@ -16,9 +16,10 @@ Feel free to support the development with a [**donation**](https://www.paypal.co
    ```
    git clone https://github.com/zebrunner/selenoid.git && cd selenoid && ./zebrunner.sh setup
    ```
-2. Provide the required details and start services.
-3. Use `http://hostname:4444/wd/hub` as Selenium Hub Url for your tests replacing hostname by actual value or ip address
-4. Execute `./zebrunner.sh setup` anytime you want to pull the latest browser versions
+2. Provide the required details and start services
+   > S3 compatible storage is required.
+4. Use `http://hostname:4444/wd/hub` as Selenium Hub Url for your tests replacing hostname by actual value or ip address
+5. Execute `./zebrunner.sh setup` anytime you want to pull the latest browser versions
    > Each setup pulls the two latest browsers versions for Chrome/Firefox and Opera
 
 ## Documentation and free support
