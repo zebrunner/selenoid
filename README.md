@@ -1,15 +1,15 @@
 Zebrunner Selenoid Engine
 ==================
 
-Dockerized Selenium Hub for executing web tests on Chrome, Firefox, Opera and Microsoft Edge browsers saving driver logs and video recordings onto the S3 compatible storage.
-
-It is fully integrated into the [Zebrunner Community Edition](https://zebrunner.github.io/community-edition) ecosystem as an embedded Selenium Hub.
-
 Feel free to support the development with a [**donation**](https://www.paypal.com/donate?hosted_button_id=JLQ4U468TWQPS) for the next improvements.
 
 <p align="center">
   <a href="https://zebrunner.com/"><img alt="Zebrunner" src="https://github.com/zebrunner/zebrunner/raw/master/docs/img/zebrunner_intro.png"></a>
 </p>
+
+Dockerized Selenium Hub for executing web tests on Chrome, Firefox, Opera and Microsoft Edge browsers saving driver logs and video recordings onto the S3 compatible storage.
+
+It is fully integrated into the [Zebrunner Community Edition](https://zebrunner.github.io/community-edition) ecosystem as an embedded Selenium Hub.
 
 ## Usage
 1. Clone and configure:
