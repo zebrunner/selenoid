@@ -59,7 +59,7 @@
     $VERSION
     "
 
-    bin/cm selenoid configure --browsers 'chrome;firefox;opera;MicrosoftEdge' --vnc --last-versions 1 --config-dir "${BASEDIR}" $*
+    bin/cm selenoid configure --force --browsers 'chrome;firefox;opera;MicrosoftEdge' --vnc --last-versions 1 --config-dir "${BASEDIR}" $*
     # no need to remove selenoid container as we don't start and only configure prerequisites
   }
 
