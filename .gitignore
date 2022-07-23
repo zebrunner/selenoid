@@ -1,5 +1,6 @@
 .disabled
 .env
+.env_*
 bin/cm
 browsers.json
 backup

@@ -15,6 +15,11 @@
       set_aws_storage_settings
     fi
 
+    # load current .env if exist to read actual vars even manually updated!
+    if [[ -f .env ]]; then
+      source .env
+    fi
+
     cp .env.original .env
     if [[ ! $ZBR_MINIO_ENABLED -eq 1 ]]; then
       # use case with AWS S3
@@ -28,6 +33,17 @@
         replace .env "/artifacts" "${ZBR_STORAGE_TENANT}/artifacts"
       fi
     fi
+
+    replace .env "CPU=1.0" "CPU=${CPU}"
+    replace .env "MEMORY=1024m" "MEMORY=${MEMORY}"
+    replace .env "LIMIT=5" "LIMIT=${LIMIT}"
+    replace .env "RETRY_COUNT=1" "RETRY_COUNT=${RETRY_COUNT}"
+    replace .env "SAVE_ALL_LOGS=-save-all-logs" "SAVE_ALL_LOGS=${SAVE_ALL_LOGS}"
+    replace .env "SERVICE_STARTUP_TIMEOUT=30s" "SERVICE_STARTUP_TIMEOUT=${SERVICE_STARTUP_TIMEOUT}"
+    replace .env "SESSION_ATTEMPT_TIMEOUT=30s" "SESSION_ATTEMPT_TIMEOUT=${SESSION_ATTEMPT_TIMEOUT}"
+    replace .env "SESSION_DELETE_TIMEOUT=30s" "SESSION_DELETE_TIMEOUT=${SESSION_DELETE_TIMEOUT}"
+    replace .env "TIMEOUT=3m0s" "TIMEOUT=${TIMEOUT}"
+    replace .env "MAX_TIMEOUT=1h0m0s" "MAX_TIMEOUT=${MAX_TIMEOUT}"
 
     # export all ZBR* variables to save user input
     export_settings
