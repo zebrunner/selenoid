@@ -15,6 +15,7 @@
       set_aws_storage_settings
     fi
 
+    source .env.original
     # load current .env if exist to read actual vars even manually updated!
     if [[ -f .env ]]; then
       source .env
