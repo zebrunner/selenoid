@@ -2,6 +2,12 @@
 
   setup() {
 
+    source .env.original
+    # load current .env if exist to read actual vars even manually updated!
+    if [[ -f .env ]]; then
+      source .env
+    fi
+
     if [[ $ZBR_INSTALLER -eq 0 ]]; then
       # load default interactive installer settings
       source backup/settings.env.original
@@ -13,12 +19,6 @@
 
       # setup executed outside of zebrunner community edition. need ask about S3 compatible storage credentials
       set_aws_storage_settings
-    fi
-
-    source .env.original
-    # load current .env if exist to read actual vars even manually updated!
-    if [[ -f .env ]]; then
-      source .env
     fi
 
     cp .env.original .env
