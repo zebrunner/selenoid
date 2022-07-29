@@ -2,6 +2,12 @@
 
   setup() {
 
+    source .env.original
+    # load current .env if exist to read actual vars even manually updated!
+    if [[ -f .env ]]; then
+      source .env
+    fi
+
     if [[ $ZBR_INSTALLER -eq 0 ]]; then
       # load default interactive installer settings
       source backup/settings.env.original
@@ -28,6 +34,17 @@
         replace .env "/artifacts" "${ZBR_STORAGE_TENANT}/artifacts"
       fi
     fi
+
+    replace .env "CPU=1.0" "CPU=${CPU}"
+    replace .env "MEMORY=1024m" "MEMORY=${MEMORY}"
+    replace .env "LIMIT=5" "LIMIT=${LIMIT}"
+    replace .env "RETRY_COUNT=1" "RETRY_COUNT=${RETRY_COUNT}"
+    replace .env "SAVE_ALL_LOGS=-save-all-logs" "SAVE_ALL_LOGS=${SAVE_ALL_LOGS}"
+    replace .env "SERVICE_STARTUP_TIMEOUT=30s" "SERVICE_STARTUP_TIMEOUT=${SERVICE_STARTUP_TIMEOUT}"
+    replace .env "SESSION_ATTEMPT_TIMEOUT=30s" "SESSION_ATTEMPT_TIMEOUT=${SESSION_ATTEMPT_TIMEOUT}"
+    replace .env "SESSION_DELETE_TIMEOUT=30s" "SESSION_DELETE_TIMEOUT=${SESSION_DELETE_TIMEOUT}"
+    replace .env "TIMEOUT=3m0s" "TIMEOUT=${TIMEOUT}"
+    replace .env "MAX_TIMEOUT=1h0m0s" "MAX_TIMEOUT=${MAX_TIMEOUT}"
 
     # export all ZBR* variables to save user input
     export_settings
@@ -59,7 +76,7 @@
     $VERSION
     "
 
-    bin/cm selenoid configure --browsers 'chrome;firefox;opera;MicrosoftEdge' --vnc --last-versions 1 --config-dir "${BASEDIR}" $*
+    bin/cm selenoid configure --force --browsers 'chrome;firefox;opera;MicrosoftEdge' --vnc --last-versions 1 --config-dir "${BASEDIR}" $*
     # no need to remove selenoid container as we don't start and only configure prerequisites
   }
 
