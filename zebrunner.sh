@@ -89,7 +89,7 @@
     if [ ! -f backup/settings.env ]; then
       echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
       echo_telegram
-      exit -1
+      exit 1
     fi
 
     docker-compose --env-file .env -f docker-compose.yml down -v
@@ -108,7 +108,7 @@
     if [ ! -f backup/settings.env ]; then
       # need proceed with setup steps in advance!
       setup
-      exit -1
+      exit 1
     fi
 
     # create infra network only if not exist
@@ -129,7 +129,7 @@
     if [ ! -f backup/settings.env ]; then
       echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
       echo_telegram
-      exit -1
+      exit 1
     fi
 
     docker-compose --env-file .env -f docker-compose.yml stop
@@ -143,7 +143,7 @@
     if [ ! -f backup/settings.env ]; then
       echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
       echo_telegram
-      exit -1
+      exit 1
     fi
 
     docker-compose --env-file .env -f docker-compose.yml down
@@ -157,7 +157,7 @@
     if [ ! -f backup/settings.env ]; then
       echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
       echo_telegram
-      exit -1
+      exit 1
     fi
 
     cp backup/settings.env backup/settings.env.bak
@@ -173,7 +173,7 @@
     if [ ! -f backup/settings.env ]; then
       echo_warning "You have to setup services in advance using: ./zebrunner.sh setup"
       echo_telegram
-      exit -1
+      exit 1
     fi
 
     stop
