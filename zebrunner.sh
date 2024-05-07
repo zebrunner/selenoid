@@ -92,7 +92,7 @@
       exit 1
     fi
 
-    docker-compose --env-file .env -f docker-compose.yml down -v
+    docker compose down -v
     bin/cm selenoid cleanup
 
     rm -f backup/settings.env
@@ -118,7 +118,7 @@
       cp .env.original .env
     fi
 
-    docker-compose --env-file .env -f docker-compose.yml up -d
+    docker compose up -d
   }
 
   stop() {
@@ -132,7 +132,7 @@
       exit 1
     fi
 
-    docker-compose --env-file .env -f docker-compose.yml stop
+    docker compose stop
   }
 
   down() {
@@ -146,7 +146,7 @@
       exit 1
     fi
 
-    docker-compose --env-file .env -f docker-compose.yml down
+    docker compose down
   }
 
   backup() {
